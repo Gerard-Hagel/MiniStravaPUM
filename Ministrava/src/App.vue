@@ -1,30 +1,25 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+  import { RouterLink, RouterView } from 'vue-router';
+  export default {
+    name: "HomeView",
+  };
 </script>
-
+    
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="min-h-screen bg-gray-100 flex flex-col w-full">
+    <!-- <nav class="bg-green-500 p-4 flex w-full justify-between items-center">
+      <div class="flex space-x-4">
+        <button class="font-semibold">Leki</button>
+        <button class="font-semibold">Faktury</button>
+        <button class="font-semibold">Klienci</button>
+      </div>
+      <button class="font-semibold">Wyloguj się</button>
+    </nav> -->
+    
+    <div><RouterView /></div>
+    <div class="fixed left-0 bottom-0">
+      <RouterLink to="/">Home&nbsp;</RouterLink>
+      <RouterLink to="/login">Login&nbsp;</RouterLink>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
