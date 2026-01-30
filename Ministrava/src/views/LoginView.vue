@@ -3,12 +3,10 @@
     <main class="flex-1 flex justify-center items-start pt-24">
       <div class="w-full max-w-md border border-gray-400 rounded-xl overflow-hidden shadow-md">
 
-        <!-- Header -->
         <div class="bg-green-300 text-white text-center text-xl font-bold py-4">
           Logowanie
         </div>
 
-        <!-- Form -->
         <form @submit.prevent="onSubmit" class="px-6 py-6">
           <div class="mb-4">
             <label class="block mb-1 font-semibold">Email</label>
