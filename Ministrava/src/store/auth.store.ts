@@ -14,12 +14,12 @@ export const useAuthStore = defineStore('auth', {
         Password: password,
       })
 
-      if (!res.data.JWTToken) {
+      if (!res.data.jwtToken) {
         throw new Error('Brak tokena w odpowiedzi')
       }
 
-      this.token = res.data.JWTToken
-      localStorage.setItem('token', res.data.JWTToken)
+      this.token = res.data.jwtToken
+      localStorage.setItem('token', res.data.jwtToken)
     },
 
     logout() {

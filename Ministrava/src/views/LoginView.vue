@@ -73,7 +73,7 @@ const onSubmit = async () => {
   error.value = ''
   try {
     await auth.login(email.value, password.value)
-    router.push('/')
+    router.push('/welcome')
   } catch (e: any) {
     error.value = e.message || 'Błąd logowania'
   } finally {

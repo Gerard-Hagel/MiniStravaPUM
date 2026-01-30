@@ -22,6 +22,7 @@
       <RouterLink to="/user">User&nbsp;</RouterLink>
       <RouterLink to="/stats">Stats&nbsp;</RouterLink>
       <RouterLink to="/activity">Activity&nbsp;</RouterLink>
+      <RouterLink to="/denied">DeniedAccess&nbsp;</RouterLink>
     </div>
   </div>
 </template>

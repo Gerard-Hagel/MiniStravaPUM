@@ -4,13 +4,17 @@ import LoginView from '../views/LoginView.vue'
 import UserView from '../views/UserView.vue'
 import StatsView from '../views/StatsView.vue'
 import ActivityView from '../views/ActivityView.vue'
+import WelcomeView from '../views/WelcomeView.vue'
+import DeniedAccessView from '../views/DeniedAccessView.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: HomeView },
   { path: '/login', name: 'Login', component: LoginView },
-  { path: '/user', name: 'User', component: UserView },
-  { path: '/stats', name: 'Stats', component: StatsView },
-  { path: '/activity', name: 'Activity', component: ActivityView },
+  { path: '/welcome', name: 'Welcome', component: WelcomeView, meta: { requiresAdmin: true } },
+  { path: '/user', name: 'User', component: UserView, meta: { requiresAdmin: true } },
+  { path: '/stats', name: 'Stats', component: StatsView, meta: { requiresAdmin: true } },
+  { path: '/activity', name: 'Activity', component: ActivityView, meta: { requiresAdmin: true } },
+  { path: '/denied', name: 'Denied', component: DeniedAccessView },
 ]
 
 const router = createRouter({
