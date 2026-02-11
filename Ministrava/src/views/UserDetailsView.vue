@@ -11,7 +11,6 @@
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Admin:</strong> {{ user.isAdmin ? 'Tak' : 'Nie' }}</p>
         <p><strong>Data utworzenia:</strong> {{ formatDate(user.createdAt) }}</p>
-        <p><strong>Ostatnie logowanie:</strong> {{ user.lastLoginAt ? formatDate(user.lastLoginAt) : '-' }}</p>
       </div>
 
       <button
