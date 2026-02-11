@@ -26,34 +26,32 @@ router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token")
 
   if (!token) {
-    if (to.path !== "/login") {
-      return next({ path: "/login" })
-    } else {
+    if (to.name === "Home" || to.name === "Login") {
       return next()
+    } else {
+      return next({ name: "Login" })
     }
   }
 
-  const parts = token.split('.')
-  if (parts.length !== 3 || !parts[1]) {
-    console.error("Nieprawidłowy token JWT")
-    localStorage.removeItem("token")
-    return next({ path: "/login" })
-  }
-
-  let payload: { [key: string]: any }
+  let payload: { [key: string]: any } = {}
   try {
-    payload = JSON.parse(atob(parts[1]))
+    const base64Payload = token.split('.')[1] ?? ''
+    payload = JSON.parse(atob(base64Payload))
   } catch (err) {
-    console.error("Błąd dekodowania tokena:", err)
+    console.error("Nieprawidłowy token JWT:", err)
     localStorage.removeItem("token")
-    return next({ path: "/login" })
+    return next({ name: "Login" })
   }
 
   const rolesClaim = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
   const roles = Array.isArray(rolesClaim) ? rolesClaim : [rolesClaim]
 
+  if (to.name === "Home") {
+    return next({ name: "Welcome" })
+  }
+
   if (to.meta.requiresAdmin && !roles.includes("Admin")) {
-    return next({ path: "/denied" })
+    return next({ name: "Denied" })
   }
 
   next()

@@ -1,11 +1,30 @@
 import { defineStore } from 'pinia'
 import api from '../api/axios'
 
+function parseJwt(token: string) {
+  try {
+    const base64Payload = token.split('.')[1] ?? ''
+    return JSON.parse(atob(base64Payload))
+  } catch {
+    return null
+  }
+}
+
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem('token') as string | null,
-    user: null as any,
   }),
+
+  getters: {
+    isLoggedIn: (state) => !!state.token,
+
+    jwtPayload: (state) =>
+      state.token ? parseJwt(state.token) : null,
+
+    isAdmin(): boolean {
+      return this.jwtPayload?.['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Admin'
+    },
+  },
 
   actions: {
     async login(email: string, password: string) {
@@ -24,7 +43,6 @@ export const useAuthStore = defineStore('auth', {
 
     logout() {
       this.token = null
-      this.user = null
       localStorage.removeItem('token')
     },
   },
