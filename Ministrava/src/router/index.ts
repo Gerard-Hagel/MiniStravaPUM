@@ -2,8 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import UserView from '../views/UserView.vue'
+import UserDetailsView from '../views/UserDetailsView.vue'
 import StatsView from '../views/StatsView.vue'
 import ActivityView from '../views/ActivityView.vue'
+import ActivityDetailsView from '../views/ActivityDetailsView.vue'
 import WelcomeView from '../views/WelcomeView.vue'
 import DeniedAccessView from '../views/DeniedAccessView.vue'
 
@@ -12,8 +14,10 @@ const routes = [
   { path: '/login', name: 'Login', component: LoginView },
   { path: '/welcome', name: 'Welcome', component: WelcomeView, meta: { requiresAdmin: true } },
   { path: '/user', name: 'User', component: UserView, meta: { requiresAdmin: true } },
+  { path: '/user/:id', name: 'UserDetails', component: UserDetailsView, meta: { requiresAdmin: true } },
   { path: '/stats', name: 'Stats', component: StatsView, meta: { requiresAdmin: true } },
   { path: '/activity', name: 'Activity', component: ActivityView, meta: { requiresAdmin: true } },
+  { path: '/activity/:id', name: 'ActivityDetails', component: ActivityDetailsView, meta: { requiresAdmin: true } },
   { path: '/denied', name: 'Denied', component: DeniedAccessView },
 ]
 

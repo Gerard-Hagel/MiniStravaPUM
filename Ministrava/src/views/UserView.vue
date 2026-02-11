@@ -26,6 +26,13 @@
               {{ u.isAdmin ? 'Administrator' : 'Użytkownik' }}
             </p>
           </div>
+
+          <button
+            class="w-9 h-9 bg-sky-400 text-white hover:bg-sky-600 transition rounded-lg flex items-center justify-center font-bold text-lg"
+            @click="$router.push({ name: 'UserDetails', params: { id: u.id } })"
+          >
+            i
+          </button>
         </div>
 
         <p v-if="loading" class="text-center py-4">Ładowanie...</p>

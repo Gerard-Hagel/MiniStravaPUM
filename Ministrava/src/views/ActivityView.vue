@@ -10,8 +10,7 @@
         <div
           v-for="a in activities"
           :key="a.id"
-          class="flex justify-between items-center px-6 py-4 border-t border-gray-400"
-        >
+          class="flex justify-between items-center px-6 py-4 border-t border-gray-400">
           <div>
             <p class="font-semibold">
               {{ a.name || 'Bez nazwy' }} ({{ a.activityType }})
@@ -23,13 +22,20 @@
               {{ a.distanceMeters }} m
             </p>
           </div>
+          
+          <div>
+            <button
+              class="w-9 h-9 mr-5 bg-sky-400 text-white hover:bg-sky-600 rounded-lg font-bold text-lg"
+              @click="$router.push({ name: 'ActivityDetails', params: { id: a.id } })">
+              i
+            </button>
 
-          <button
-            class="w-24 h-9 bg-red-500 text-white hover:bg-red-700 transition rounded-lg font-bold"
-            @click="remove(a.id)"
-          >
-            Usuń
-          </button>
+            <button
+              class="w-12 h-9 bg-red-500 text-white hover:bg-red-700 transition rounded-lg font-bold"
+              @click="remove(a.id)">
+              Usuń
+            </button>
+          </div>
         </div>
 
         <p v-if="loading" class="text-center py-4">Ładowanie...</p>
