@@ -10,7 +10,7 @@
         <p><strong>Typ:</strong> {{ activity.activityType }}</p>
         <p><strong>Użytkownik:</strong> {{ activity.userEmail }}</p>
         <p><strong>Odległość:</strong> {{ activity.distanceMeters }} m</p>
-        <p><strong>Czas trwania:</strong> {{ formatDuration(activity.durationSeconds) }}</p>
+        <p><strong>Czas trwania:</strong> {{ formatDuration(activity) }}</p>
         <p><strong>Start:</strong> {{ formatDate(activity.startTime) }}</p>
         <p><strong>Koniec:</strong> {{ formatDate(activity.endTime) }}</p>
         <p><strong>Notatki:</strong> {{ activity.notes || '-' }}</p>
@@ -77,13 +77,21 @@ export default defineComponent({
     formatDate(dateStr?: string) {
       return dateStr ? new Date(dateStr).toLocaleString() : "-";
     },
-    formatDuration(seconds?: number) {
-      if (!seconds) return "-";
+    formatDuration(activity: Activity) {
+      if (!activity.startTime || !activity.endTime) return "-";
+
+      const start = new Date(activity.startTime).getTime();
+      const end = new Date(activity.endTime).getTime();
+
+      const seconds = Math.floor((end - start) / 1000);
+      if (seconds <= 0) return "-";
+
       const h = Math.floor(seconds / 3600);
       const m = Math.floor((seconds % 3600) / 60);
       const s = seconds % 60;
+
       return `${h}h ${m}m ${s}s`;
-    },
+    }
   },
 });
 </script>
