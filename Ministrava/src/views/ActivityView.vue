@@ -1,76 +1,104 @@
 <template>
   <div class="min-h-screen w-screen bg-white flex flex-col">
     <main class="flex-1 flex flex-col items-center pt-16 w-full">
-
       <!-- Filtry -->
-      <div class="w-full max-w-4xl border border-gray-400 rounded-xl shadow-md p-4 mb-4 bg-gray-50">
-        <h2 class="text-lg font-bold mb-2">Filtry</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="w-full max-w-4xl border border-gray-400 rounded-xl overflow-hidden shadow-md mb-4">
+        <div class="bg-green-300 text-white text-center text-xl font-bold py-4">
+          Filtry
+        </div>
+        
+        <div class="p-4 bg-gray-50">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="flex flex-col">
+              <label class="text-sm font-semibold mb-1 text-gray-700">
+                Email użytkownika
+              </label>
+              <input
+                v-model="filters.userEmail"
+                type="text"
+                placeholder="Email"
+                class="border px-2 py-1 rounded"
+              />
+            </div>
 
-          <input
-            v-model="filters.userEmail"
-            type="text"
-            placeholder="Email użytkownika"
-            class="border px-2 py-1 rounded"
-          />
+            <div class="flex flex-col">
+              <label class="text-sm font-semibold mb-1 text-gray-700">
+                Od daty
+              </label>
+              <input
+                v-model="filters.from"
+                type="date"
+                class="border px-2 py-1 rounded"
+              />
+            </div>
+            
+            <div class="flex flex-col">
+              <label class="text-sm font-semibold mb-1 text-gray-700">
+                Do daty
+              </label>
+              <input
+                v-model="filters.to"
+                type="date"
+                class="border px-2 py-1 rounded"
+              />
+            </div>
 
-          <input
-            v-model="filters.from"
-            type="date"
-            placeholder="Od daty"
-            class="border px-2 py-1 rounded"
-          />
+            <div class="flex flex-col">
+              <label class="text-sm font-semibold mb-1 text-gray-700">
+                Minimalny dystans (m)
+              </label>
+              <input
+                v-model.number="filters.minDistance"
+                type="number"
+                placeholder="Min dystans"
+                class="border px-2 py-1 rounded"
+              />
+            </div>
 
-          <input
-            v-model="filters.to"
-            type="date"
-            placeholder="Do daty"
-            class="border px-2 py-1 rounded"
-          />
+            <div class="flex flex-col">
+              <label class="text-sm font-semibold mb-1 text-gray-700">
+                Maksumalny dystans (m)
+              </label>
+              <input
+                v-model.number="filters.maxDistance"
+                type="number"
+                placeholder="Max dystans"
+                class="border px-2 py-1 rounded"
+              />
+            </div>
 
-          <input
-            v-model.number="filters.minDistance"
-            type="number"
-            placeholder="Min dystans (m)"
-            class="border px-2 py-1 rounded"
-          />
+            <div class="flex flex-col">
+              <label class="text-sm font-semibold mb-1 text-gray-700">
+                Wybierz typ aktywności
+              </label>
+              <select v-model="filters.type" class="border px-2 py-1 rounded">
+                <option value="">Wszystkie typy</option>
+                <option value="Running">Bieganie</option>
+                <option value="Cycling">Rower</option>
+                <option value="Walking">Chodzenie</option>
+                <option value="Hike">Hiking</option>
+                <option value="Workout">Ćwiczenie</option>
+              </select>
+            </div>
 
-          <input
-            v-model.number="filters.maxDistance"
-            type="number"
-            placeholder="Max dystans (m)"
-            class="border px-2 py-1 rounded"
-          />
+            <button
+              class="col-span-2 md:col-span-1 bg-green-400 text-white rounded px-3 py-1 hover:bg-green-500"
+              @click="applyFilters">
+              Filtruj
+            </button>
 
-          <select v-model="filters.type" class="border px-2 py-1 rounded">
-            <option value="">Wszystkie typy</option>
-            <option value="Running">Bieganie</option>
-            <option value="Cycling">Rower</option>
-            <option value="Walking">Chodzenie</option>
-            <option value="Hike">Hiking</option>
-            <option value="Workout">Ćwiczenie</option>
-          </select>
+            <button
+              class="col-span-2 md:col-span-1 bg-gray-300 text-black rounded px-3 py-1 hover:bg-gray-400"
+              @click="resetFilters">
+              Wyczyść
+            </button>
 
-          <button
-            class="col-span-2 md:col-span-1 bg-green-400 text-white rounded px-3 py-1 hover:bg-green-500"
-            @click="applyFilters"
-          >
-            Filtruj
-          </button>
-
-          <button
-            class="col-span-2 md:col-span-1 bg-gray-300 text-black rounded px-3 py-1 hover:bg-gray-400"
-            @click="resetFilters"
-          >
-            Wyczyść
-          </button>
-
+          </div>
         </div>
       </div>
-
-      <!-- Lista aktywności -->
+      
+        <!-- Lista aktywności -->
       <div class="w-full max-w-4xl border border-gray-400 rounded-xl overflow-hidden shadow-md">
-
         <div class="bg-green-300 text-white text-center text-xl font-bold py-4">
           Aktywności
         </div>
@@ -78,8 +106,7 @@
         <div
           v-for="a in activities"
           :key="a.id"
-          class="flex justify-between items-center px-6 py-4 border-t border-gray-400"
-        >
+          class="flex justify-between items-center px-6 py-4 border-t border-gray-400">
           <div>
             <p class="font-semibold">
               {{ a.name || 'Bez nazwy' }} ({{ a.activityType }})
@@ -91,19 +118,17 @@
               {{ a.distanceMeters }} m
             </p>
           </div>
-          
+            
           <div class="flex gap-2">
             <button
               class="w-9 h-9 bg-sky-400 text-white hover:bg-sky-600 rounded-lg font-bold text-lg"
-              @click="$router.push({ name: 'ActivityDetails', params: { id: a.id } })"
-            >
+              @click="$router.push({ name: 'ActivityDetails', params: { id: a.id } })">
               i
             </button>
 
             <button
               class="w-12 h-9 bg-red-500 text-white hover:bg-red-700 transition rounded-lg font-bold"
-              @click="remove(a.id)"
-            >
+              @click="remove(a.id)">
               Usuń
             </button>
           </div>
@@ -111,7 +136,6 @@
 
         <p v-if="loading" class="text-center py-4">Ładowanie...</p>
         <p v-if="error" class="text-center py-4 text-red-500">{{ error }}</p>
-
       </div>
     </main>
   </div>
